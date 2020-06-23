@@ -5,6 +5,8 @@ authors = ["John <jlek@findmypast.com>"]
 edition = "2018"
 
 [dependencies]
+tokio = { version = "0.2", features = ["macros"] }
+warp = "0.2"
 
 [dev-dependencies.cargo-husky]
 version = "1"
