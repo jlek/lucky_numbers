@@ -5,6 +5,7 @@ authors = ["John <jlek@findmypast.com>"]
 edition = "2018"
 
 [dependencies]
+serde = { version = "1.0.110", features = ["derive"] }
 tokio = { version = "0.2", features = ["macros"] }
 warp = "0.2"
 
