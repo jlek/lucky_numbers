@@ -1,3 +1,4 @@
+use rayon::prelude::*;
 use serde::Deserialize;
 
 #[derive(Deserialize)]
@@ -11,9 +12,12 @@ pub struct LuckyNumbersRequest {
 pub fn count_lucky_numbers(request: LuckyNumbersRequest) -> String {
   let sequence_string = request.sequence.to_string();
   (request.start..=request.end)
-    .fold(0, |accumulator, number| {
-      accumulator + number.to_string().matches(&sequence_string).count()
-    })
+    .into_par_iter()
+    .fold(
+      || 0,
+      |accumulator, number| accumulator + number.to_string().matches(&sequence_string).count(),
+    )
+    .sum::<usize>()
     .to_string()
 }
 

@@ -669,6 +669,7 @@ version = "0.1.0"
 dependencies = [
  "cargo-husky",
  "criterion",
+ "rayon",
  "serde",
  "tokio",
  "warp",
