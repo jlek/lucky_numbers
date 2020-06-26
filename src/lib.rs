@@ -16,3 +16,19 @@ pub fn count_lucky_numbers(request: LuckyNumbersRequest) -> String {
     })
     .to_string()
 }
+
+#[test]
+fn test_count_lucky_numbers() {
+  // Arrange
+  let request = LuckyNumbersRequest {
+    start: 100,
+    end: 150,
+    sequence: 14,
+  };
+
+  // Act
+  let result = count_lucky_numbers(request);
+
+  // Assert
+  assert_eq!(result, "11".to_string()); // 114, 140 ... 149
+}
