@@ -16,6 +16,12 @@ criterion = "0.3"
 version = "1"
 features = ["run-cargo-clippy"]
 
+[profile.bench]
+lto = "fat"
+
+[profile.release]
+lto = "fat"
+
 [[bench]]
 name = "lucky_numbers_benchmark"
 harness = false
