@@ -1,4 +1,7 @@
-use rayon::prelude::*;
+mod lucky_numbers;
+
+use self::lucky_numbers::LuckyNumbers;
+// use rayon::prelude::*;
 use serde::Deserialize;
 
 #[derive(Deserialize)]
@@ -8,75 +11,29 @@ pub struct LuckyNumbersRequest {
   pub sequence: i32,
 }
 
-struct LuckyNumbers {
-  sequence: i32,
-  previous_value: Option<i32>,
-  order_of_magnitude: u32,
-}
-
-impl LuckyNumbers {
-  #[allow(dead_code)]
-  fn new(sequence: i32) -> Self {
-    let sequence_length = (sequence as f64).log10().ceil() as usize;
-    Self {
-      sequence,
-      previous_value: None,
-      order_of_magnitude: sequence_length as u32,
-    }
-  }
-}
-
-impl Iterator for LuckyNumbers {
-  type Item = i32;
-
-  fn next(&mut self) -> Option<Self::Item> {
-    let value = match *self {
-      Self {
-        previous_value: None,
-        sequence,
-        ..
-      } => sequence,
-
-      Self {
-        previous_value: Some(114),
-        ..
-      } => 140,
-
-      Self {
-        previous_value: Some(previous_value),
-        ..
-      } if previous_value >= 140 && previous_value < 149 => previous_value + 1,
-
-      Self {
-        previous_value: Some(149),
-        ..
-      } => 214,
-
-      Self {
-        previous_value: Some(previous_value),
-        order_of_magnitude,
-        ..
-      } => previous_value + (10 as i32).pow(order_of_magnitude),
-    };
-    self.previous_value = Some(value);
-    Some(value)
-  }
-}
-
 #[allow(clippy::needless_pass_by_value)] // Accept the request by value: the request is consumed to produce the response
 pub fn count_lucky_numbers(request: LuckyNumbersRequest) -> String {
   let sequence_string = request.sequence.to_string();
   let sequence_bytes = sequence_string.as_bytes();
-  (request.start..=request.end)
-    .into_par_iter()
-    .fold(
-      || 0,
-      |accumulator, number| {
-        accumulator + number_of_matches(number.to_string().as_bytes(), sequence_bytes)
-      },
-    )
-    .sum::<usize>()
+
+  LuckyNumbers::new(request.sequence)
+    .skip_while(|number| *number < request.start)
+    .take_while(|number| *number <= request.end)
+    .fold(0, |accumulator, number| {
+      accumulator + number_of_matches(number.to_string().as_bytes(), sequence_bytes)
+    })
     .to_string()
+
+  // (request.start..=request.end)
+  //   .into_par_iter()
+  //   .fold(
+  //     || 0,
+  //     |accumulator, number| {
+  //       accumulator + number_of_matches(number.to_string().as_bytes(), sequence_bytes)
+  //     },
+  //   )
+  //   .sum::<usize>()
+  //   .to_string()
 }
 
 pub fn number_of_matches(number: &[u8], sequence: &[u8]) -> usize {
@@ -136,24 +93,4 @@ fn test_count_lucky_numbers_large() {
 
   // Assert
   assert_eq!(result, "1".to_string());
-}
-
-#[test]
-fn test_lucky_numbers() {
-  // Arrange
-  let end = 1000;
-  let sequence = 14;
-  let lucky_numbers = LuckyNumbers::new(sequence);
-
-  // Act
-  let result: Vec<i32> = lucky_numbers.take(20).collect();
-
-  // Assert
-  assert_eq!(
-    result,
-    [
-      14, 114, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 214, 314, 414, 514, 614, 714, 814,
-      914
-    ]
-  )
 }
