@@ -1,7 +1,6 @@
 mod lucky_numbers;
 
 use self::lucky_numbers::LuckyNumbers;
-// use rayon::prelude::*;
 use serde::Deserialize;
 
 #[derive(Deserialize)]
@@ -23,17 +22,6 @@ pub fn count_lucky_numbers(request: LuckyNumbersRequest) -> String {
       accumulator + number_of_matches(number.to_string().as_bytes(), sequence_bytes)
     })
     .to_string()
-
-  // (request.start..=request.end)
-  //   .into_par_iter()
-  //   .fold(
-  //     || 0,
-  //     |accumulator, number| {
-  //       accumulator + number_of_matches(number.to_string().as_bytes(), sequence_bytes)
-  //     },
-  //   )
-  //   .sum::<usize>()
-  //   .to_string()
 }
 
 pub fn number_of_matches(number: &[u8], sequence: &[u8]) -> usize {
