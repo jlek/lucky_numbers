@@ -1,28 +1,12 @@
-[package]
-name = "lucky_numbers"
-version = "0.1.0"
-authors = ["John <jlek@findmypast.com>"]
-edition = "2018"
+[workspace]
 
-[dependencies]
-serde = { version = "1.0", features = ["derive"] }
-tokio = { version = "0.2", features = ["macros"] }
-warp = "0.2"
-
-[dev-dependencies]
-criterion = "0.3"
-
-[dev-dependencies.cargo-husky]
-version = "1"
-features = ["run-cargo-clippy"]
+members = [
+    "count-lucky-numbers",
+    "count-lucky-numbers-server",
+]
 
 [profile.bench]
 lto = "fat"
 
 [profile.release]
 lto = "fat"
-
-[[bench]]
-name = "lucky_numbers_benchmark"
-harness = false
-

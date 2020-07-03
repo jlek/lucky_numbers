@@ -1,3 +1,5 @@
+use std::convert::TryInto;
+
 const TEN: u32 = 10;
 
 pub struct PrefixedLuckyNumbers {
@@ -11,7 +13,11 @@ impl PrefixedLuckyNumbers {
     Self {
       sequence,
       multiplier: 0,
-      sequence_length: sequence.to_string().len() as u32,
+      sequence_length: sequence
+        .to_string()
+        .len()
+        .try_into()
+        .expect("sequence length should fit into a u32"),
     }
   }
 }
@@ -27,7 +33,7 @@ impl Iterator for PrefixedLuckyNumbers {
 
 #[cfg(test)]
 mod test {
-  use super::*;
+  use super::PrefixedLuckyNumbers;
 
   #[test]
   fn single_digit_sequence() {

@@ -1,10 +1,7 @@
-mod postfixed_lucky_numbers;
-mod prefixed_lucky_numbers;
+use super::postfixed_lucky_numbers::PostfixedLuckyNumbers;
+use super::prefixed_lucky_numbers::PrefixedLuckyNumbers;
 
-use postfixed_lucky_numbers::PostfixedLuckyNumbers;
-use prefixed_lucky_numbers::PrefixedLuckyNumbers;
-
-pub struct LuckyNumbers {
+pub struct LuckyNumbersIterator {
   sequence: u32,
   postfixed_lucky_numbers: PostfixedLuckyNumbers,
   prefixed_lucky_numbers: PrefixedLuckyNumbers,
@@ -13,7 +10,7 @@ pub struct LuckyNumbers {
   first_value: bool,
 }
 
-impl LuckyNumbers {
+impl LuckyNumbersIterator {
   pub fn new(sequence: u32) -> Self {
     let mut postfixed_lucky_numbers = PostfixedLuckyNumbers::new(sequence);
     let mut prefixed_lucky_numbers = PrefixedLuckyNumbers::new(sequence);
@@ -24,7 +21,7 @@ impl LuckyNumbers {
       .next()
       .expect("There should be at least one value in the lucky number sequence");
 
-    Self {
+    LuckyNumbersIterator {
       sequence,
       postfixed_lucky_numbers,
       prefixed_lucky_numbers,
@@ -35,7 +32,7 @@ impl LuckyNumbers {
   }
 }
 
-impl Iterator for LuckyNumbers {
+impl Iterator for LuckyNumbersIterator {
   type Item = u32;
 
   fn next(&mut self) -> Option<Self::Item> {
@@ -60,20 +57,23 @@ impl Iterator for LuckyNumbers {
   }
 }
 
-#[test]
-fn test_lucky_numbers() {
-  // Arrange
-  let lucky_numbers = LuckyNumbers::new(14);
+#[cfg(test)]
+mod test {
+  use super::LuckyNumbersIterator;
 
-  // Act
-  let result: Vec<u32> = lucky_numbers.take(20).collect();
-
-  // Assert
-  assert_eq!(
-    result,
-    [
-      14, 114, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 214, 314, 414, 514, 614, 714, 814,
-      914
-    ]
-  )
+  #[test]
+  fn double_digit_sequence() {
+    // Arrange
+    let lucky_numbers = LuckyNumbersIterator::new(14);
+    // Act
+    let result: Vec<u32> = lucky_numbers.take(20).collect();
+    // Assert
+    assert_eq!(
+      result,
+      [
+        14, 114, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 214, 314, 414, 514, 614, 714,
+        814, 914
+      ]
+    )
+  }
 }

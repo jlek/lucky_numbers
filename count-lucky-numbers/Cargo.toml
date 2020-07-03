@@ -1,0 +1,12 @@
+[package]
+name = "count-lucky-numbers"
+version = "0.1.0"
+authors = ["John <jlek@findmypast.com>"]
+edition = "2018"
+
+[dev-dependencies]
+criterion = "0.3"
+
+[[bench]]
+name = "lucky_numbers_benchmark"
+harness = false

@@ -40,7 +40,7 @@ impl Iterator for PostfixedLuckyNumbers {
 
 #[cfg(test)]
 mod test {
-  use super::*;
+  use super::PostfixedLuckyNumbers;
 
   #[test]
   fn single_digit_sequence() {
