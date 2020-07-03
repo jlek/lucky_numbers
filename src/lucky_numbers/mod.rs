@@ -5,16 +5,16 @@ use postfixed_lucky_numbers::PostfixedLuckyNumbers;
 use prefixed_lucky_numbers::PrefixedLuckyNumbers;
 
 pub struct LuckyNumbers {
-  sequence: i32,
+  sequence: u32,
   postfixed_lucky_numbers: PostfixedLuckyNumbers,
   prefixed_lucky_numbers: PrefixedLuckyNumbers,
-  next_postfixed_value: i32,
-  next_prefixed_value: i32,
+  next_postfixed_value: u32,
+  next_prefixed_value: u32,
   first_value: bool,
 }
 
 impl LuckyNumbers {
-  pub fn new(sequence: i32) -> Self {
+  pub fn new(sequence: u32) -> Self {
     let mut postfixed_lucky_numbers = PostfixedLuckyNumbers::new(sequence);
     let mut prefixed_lucky_numbers = PrefixedLuckyNumbers::new(sequence);
     let next_postfixed_value = postfixed_lucky_numbers
@@ -36,7 +36,7 @@ impl LuckyNumbers {
 }
 
 impl Iterator for LuckyNumbers {
-  type Item = i32;
+  type Item = u32;
 
   fn next(&mut self) -> Option<Self::Item> {
     if self.first_value {
@@ -66,7 +66,7 @@ fn test_lucky_numbers() {
   let lucky_numbers = LuckyNumbers::new(14);
 
   // Act
-  let result: Vec<i32> = lucky_numbers.take(20).collect();
+  let result: Vec<u32> = lucky_numbers.take(20).collect();
 
   // Assert
   assert_eq!(

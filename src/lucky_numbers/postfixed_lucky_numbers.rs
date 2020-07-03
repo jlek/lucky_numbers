@@ -1,12 +1,14 @@
+const TEN: u32 = 10;
+
 pub struct PostfixedLuckyNumbers {
-  sequence: i32,
+  sequence: u32,
   previous_postfix: Option<u32>,
   max_postfix: u32,
-  order_of_magnitude: usize,
+  order_of_magnitude: u32,
 }
 
 impl PostfixedLuckyNumbers {
-  pub fn new(sequence: i32) -> Self {
+  pub fn new(sequence: u32) -> Self {
     PostfixedLuckyNumbers {
       sequence,
       previous_postfix: None,
@@ -17,7 +19,7 @@ impl PostfixedLuckyNumbers {
 }
 
 impl Iterator for PostfixedLuckyNumbers {
-  type Item = i32;
+  type Item = u32;
 
   fn next(&mut self) -> Option<Self::Item> {
     let mut postfix = match self.previous_postfix {
@@ -25,17 +27,14 @@ impl Iterator for PostfixedLuckyNumbers {
       Some(previous_postfix) => previous_postfix + 1,
     };
 
-    if postfix >= self.max_postfix {
+    if postfix == self.max_postfix {
       postfix = 0;
       self.max_postfix *= 10;
       self.order_of_magnitude += 1;
     }
 
     self.previous_postfix = Some(postfix);
-    Some(
-      (self.sequence as i32 * (10 as i32).pow(self.order_of_magnitude as u32)) as i32
-        + postfix as i32,
-    )
+    Some(self.sequence * TEN.pow(self.order_of_magnitude) + postfix)
   }
 }
 
@@ -49,7 +48,7 @@ mod test {
     let lucky_numbers = PostfixedLuckyNumbers::new(3);
 
     // Act
-    let result: Vec<i32> = lucky_numbers.take(20).collect();
+    let result: Vec<u32> = lucky_numbers.take(20).collect();
 
     // Assert
     assert_eq!(
@@ -64,7 +63,7 @@ mod test {
     let lucky_numbers = PostfixedLuckyNumbers::new(14);
 
     // Act
-    let result: Vec<i32> = lucky_numbers.take(20).collect();
+    let result: Vec<u32> = lucky_numbers.take(20).collect();
 
     // Assert
     assert_eq!(
@@ -82,7 +81,7 @@ mod test {
     let lucky_numbers = PostfixedLuckyNumbers::new(987);
 
     // Act
-    let result: Vec<i32> = lucky_numbers.take(20).collect();
+    let result: Vec<u32> = lucky_numbers.take(20).collect();
 
     // Assert
     assert_eq!(

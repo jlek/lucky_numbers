@@ -6,9 +6,9 @@ use serde::Deserialize;
 
 #[derive(Deserialize)]
 pub struct LuckyNumbersRequest {
-  pub start: i32,
-  pub end: i32,
-  pub sequence: i32,
+  pub start: u32,
+  pub end: u32,
+  pub sequence: u32,
 }
 
 #[allow(clippy::needless_pass_by_value)] // Accept the request by value: the request is consumed to produce the response

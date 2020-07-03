@@ -1,26 +1,27 @@
+const TEN: u32 = 10;
+
 pub struct PrefixedLuckyNumbers {
-  sequence: i32,
-  multiplier: i32,
-  sequence_length: usize,
+  sequence: u32,
+  multiplier: u32,
+  sequence_length: u32,
 }
 
 impl PrefixedLuckyNumbers {
-  pub fn new(sequence: i32) -> Self {
+  pub fn new(sequence: u32) -> Self {
     Self {
       sequence,
       multiplier: 0,
-      sequence_length: sequence.to_string().len(),
+      sequence_length: sequence.to_string().len() as u32,
     }
   }
 }
 
 impl Iterator for PrefixedLuckyNumbers {
-  type Item = i32;
+  type Item = u32;
 
   fn next(&mut self) -> Option<Self::Item> {
     self.multiplier += 1;
-
-    Some(self.multiplier * (10 as i32).pow(self.sequence_length as u32) + self.sequence)
+    Some(self.multiplier * TEN.pow(self.sequence_length) + self.sequence)
   }
 }
 
@@ -34,7 +35,7 @@ mod test {
     let lucky_numbers = PrefixedLuckyNumbers::new(3);
 
     // Act
-    let result: Vec<i32> = lucky_numbers.take(10).collect();
+    let result: Vec<u32> = lucky_numbers.take(10).collect();
 
     // Assert
     assert_eq!(result, [13, 23, 33, 43, 53, 63, 73, 83, 93, 103]);
@@ -46,7 +47,7 @@ mod test {
     let lucky_numbers = PrefixedLuckyNumbers::new(14);
 
     // Act
-    let result: Vec<i32> = lucky_numbers.take(10).collect();
+    let result: Vec<u32> = lucky_numbers.take(10).collect();
 
     // Assert
     assert_eq!(result, [114, 214, 314, 414, 514, 614, 714, 814, 914, 1014])
@@ -58,7 +59,7 @@ mod test {
     let lucky_numbers = PrefixedLuckyNumbers::new(987);
 
     // Act
-    let result: Vec<i32> = lucky_numbers.take(10).collect();
+    let result: Vec<u32> = lucky_numbers.take(10).collect();
 
     // Assert
     assert_eq!(
