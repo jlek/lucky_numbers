@@ -11,6 +11,8 @@ This program can count the number of occurences of a given lucky number in a giv
     - [Run release build](#run-release-build)
     - [Sample request](#sample-request)
   - [Project setup](#project-setup)
+    - [Workspace](#workspace)
+    - [Tests](#tests)
 
 ## How to run
 
@@ -50,7 +52,13 @@ curl "localhost:3030/lucky_numbers?start=1&end=1000&sequence=123"
 
 ## Project setup
 
+### Workspace
+
 The project is set up as a workspace, containing two "crates":
 
 - `count-lucky-numbers` is a library that exports a function called `count_lucky_numbers`, which counts the occurences of lucky numbers.
 - `count-lucky-numbers-server` is a binary that starts a web server with an endpoint that wraps the `count_lucky_numbers` function. (This crate depends on the `count-lucky-numbers` crate.)
+
+### Tests
+
+Tests can be found in the same files as the source code - this is a convention in Rust.

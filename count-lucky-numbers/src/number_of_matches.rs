@@ -1,3 +1,5 @@
+/// Helper function to find the number of occurences of a string in a substring.
+/// Can be used instead of just doing `some_string.matches(sub_string).count()` - this should be slightly more performant.
 pub fn number_of_matches(number: &[u8], sequence: &[u8]) -> usize {
   // If the sequence does not "fit" in the number, there can be no matches
   if sequence.len() > number.len() {
@@ -12,11 +14,13 @@ pub fn number_of_matches(number: &[u8], sequence: &[u8]) -> usize {
       let number_character = number[match_start_index + sequence_index];
       let sequence_character = sequence[sequence_index];
       if number_character != sequence_character {
+        // Not a match, nothing to see here, carry on to the next match start.
         break;
       }
 
       let is_last_character = sequence_index == (sequence.len() - 1);
       if is_last_character {
+        // If we reach here, all characters match
         result += 1;
       }
     }
