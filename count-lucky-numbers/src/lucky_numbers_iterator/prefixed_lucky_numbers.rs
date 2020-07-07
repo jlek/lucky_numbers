@@ -2,6 +2,8 @@ use std::convert::TryInto;
 
 const TEN: u32 = 10;
 
+/// Iterates over all numbers that can be formed by prefixing the sequence with more digits.
+/// For example, if the sequence is 123, it would return 1123, 2123, 3123, ...
 pub struct PrefixedLuckyNumbers {
   sequence: u32,
   multiplier: u32,

@@ -20,7 +20,7 @@ async fn main() {
         .await;
 }
 
-/// Represents the query parameters required for a lucky_numbers request. This will get deserialised automaticaly by Warp/Serde.
+/// Represents the query parameters required for a `lucky_numbers` request. This will get deserialised automaticaly by Warp/Serde.
 ///
 /// # Examples
 ///

@@ -1,5 +1,7 @@
 const TEN: u32 = 10;
 
+/// Iterates over all numbers that can be formed by postfixing the sequence with more digits.
+/// For example, if the sequence is 123, it would return 1230, 1231, 1232, ...
 pub struct PostfixedLuckyNumbers {
   sequence: u32,
   previous_postfix: Option<u32>,

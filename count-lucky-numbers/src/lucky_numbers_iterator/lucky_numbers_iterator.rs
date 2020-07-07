@@ -1,6 +1,8 @@
 use super::postfixed_lucky_numbers::PostfixedLuckyNumbers;
 use super::prefixed_lucky_numbers::PrefixedLuckyNumbers;
 
+/// Iterates over all numbers that contain a lucky sequence at least once.
+/// For example, if the sequence is 123, it iterate over 123, 1123, 1230, ...
 pub struct LuckyNumbersIterator {
   sequence: u32,
   postfixed_lucky_numbers: PostfixedLuckyNumbers,
