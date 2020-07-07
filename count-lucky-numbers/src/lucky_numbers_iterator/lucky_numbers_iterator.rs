@@ -5,30 +5,30 @@ use super::prefixed_lucky_numbers_iterator::PrefixedLuckyNumbersIterator;
 /// For example, if the sequence is 123, it iterate over 123, 1123, 1230, ...
 pub struct LuckyNumbersIterator {
   sequence: u32,
-  postfixed_lucky_numbers: PostfixedLuckyNumbersIterator,
-  prefixed_lucky_numbers: PrefixedLuckyNumbersIterator,
-  next_postfixed_value: u32,
-  next_prefixed_value: u32,
+  postfixed_numbers: PostfixedLuckyNumbersIterator,
+  prefixed_numbers: PrefixedLuckyNumbersIterator,
+  next_postfixed_number: u32,
+  next_prefixed_number: u32,
   first_value: bool,
 }
 
 impl LuckyNumbersIterator {
   pub fn new(sequence: u32) -> Self {
-    let mut postfixed_lucky_numbers = PostfixedLuckyNumbersIterator::new(sequence);
-    let mut prefixed_lucky_numbers = PrefixedLuckyNumbersIterator::new(sequence);
-    let next_postfixed_value = postfixed_lucky_numbers
+    let mut postfixed_numbers = PostfixedLuckyNumbersIterator::new(sequence);
+    let mut prefixed_numbers = PrefixedLuckyNumbersIterator::new(sequence);
+    let next_postfixed_number = postfixed_numbers
       .next()
       .expect("There should be at least one value in the lucky number sequence");
-    let next_prefixed_value = prefixed_lucky_numbers
+    let next_prefixed_number = prefixed_numbers
       .next()
       .expect("There should be at least one value in the lucky number sequence");
 
     LuckyNumbersIterator {
       sequence,
-      postfixed_lucky_numbers,
-      prefixed_lucky_numbers,
-      next_postfixed_value,
-      next_prefixed_value,
+      postfixed_numbers,
+      prefixed_numbers,
+      next_postfixed_number,
+      next_prefixed_number,
       first_value: true,
     }
   }
@@ -43,18 +43,18 @@ impl Iterator for LuckyNumbersIterator {
       return Some(self.sequence);
     }
 
-    if self.next_postfixed_value < self.next_prefixed_value {
-      let value = self.next_postfixed_value;
-      self.next_postfixed_value = self.postfixed_lucky_numbers.next().expect(
+    if self.next_postfixed_number < self.next_prefixed_number {
+      let number = self.next_postfixed_number;
+      self.next_postfixed_number = self.postfixed_numbers.next().expect(
         "the sequence of lucky numbers is infinite, so there should always be a next number",
       );
-      Some(value)
+      Some(number)
     } else {
-      let value = self.next_prefixed_value;
-      self.next_prefixed_value = self.prefixed_lucky_numbers.next().expect(
+      let number = self.next_prefixed_number;
+      self.next_prefixed_number = self.prefixed_numbers.next().expect(
         "the sequence of lucky numbers is infinite, so there should always be a next number",
       );
-      Some(value)
+      Some(number)
     }
   }
 }
