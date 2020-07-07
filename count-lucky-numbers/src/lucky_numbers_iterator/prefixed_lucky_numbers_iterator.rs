@@ -4,15 +4,15 @@ const TEN: u32 = 10;
 
 /// Iterates over all numbers that can be formed by prefixing the sequence with more digits.
 /// For example, if the sequence is 123, it would return 1123, 2123, 3123, ...
-pub struct PrefixedLuckyNumbers {
+pub struct PrefixedLuckyNumbersIterator {
   sequence: u32,
   multiplier: u32,
   sequence_length: u32,
 }
 
-impl PrefixedLuckyNumbers {
+impl PrefixedLuckyNumbersIterator {
   pub fn new(sequence: u32) -> Self {
-    Self {
+    PrefixedLuckyNumbersIterator {
       sequence,
       multiplier: 0,
       sequence_length: sequence
@@ -24,7 +24,7 @@ impl PrefixedLuckyNumbers {
   }
 }
 
-impl Iterator for PrefixedLuckyNumbers {
+impl Iterator for PrefixedLuckyNumbersIterator {
   type Item = u32;
 
   fn next(&mut self) -> Option<Self::Item> {
@@ -35,12 +35,12 @@ impl Iterator for PrefixedLuckyNumbers {
 
 #[cfg(test)]
 mod test {
-  use super::PrefixedLuckyNumbers;
+  use super::PrefixedLuckyNumbersIterator;
 
   #[test]
   fn single_digit_sequence() {
     // Arrange
-    let lucky_numbers = PrefixedLuckyNumbers::new(3);
+    let lucky_numbers = PrefixedLuckyNumbersIterator::new(3);
 
     // Act
     let result: Vec<u32> = lucky_numbers.take(10).collect();
@@ -52,7 +52,7 @@ mod test {
   #[test]
   fn double_digit_sequence() {
     // Arrange
-    let lucky_numbers = PrefixedLuckyNumbers::new(14);
+    let lucky_numbers = PrefixedLuckyNumbersIterator::new(14);
 
     // Act
     let result: Vec<u32> = lucky_numbers.take(10).collect();
@@ -64,7 +64,7 @@ mod test {
   #[test]
   fn triple_digit_sequence() {
     // Arrange
-    let lucky_numbers = PrefixedLuckyNumbers::new(987);
+    let lucky_numbers = PrefixedLuckyNumbersIterator::new(987);
 
     // Act
     let result: Vec<u32> = lucky_numbers.take(10).collect();

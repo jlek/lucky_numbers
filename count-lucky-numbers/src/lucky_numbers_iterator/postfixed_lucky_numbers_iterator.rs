@@ -2,16 +2,16 @@ const TEN: u32 = 10;
 
 /// Iterates over all numbers that can be formed by postfixing the sequence with more digits.
 /// For example, if the sequence is 123, it would return 1230, 1231, 1232, ...
-pub struct PostfixedLuckyNumbers {
+pub struct PostfixedLuckyNumbersIterator {
   sequence: u32,
   previous_postfix: Option<u32>,
   max_postfix: u32,
   order_of_magnitude: u32,
 }
 
-impl PostfixedLuckyNumbers {
+impl PostfixedLuckyNumbersIterator {
   pub fn new(sequence: u32) -> Self {
-    PostfixedLuckyNumbers {
+    PostfixedLuckyNumbersIterator {
       sequence,
       previous_postfix: None,
       max_postfix: 10,
@@ -20,7 +20,7 @@ impl PostfixedLuckyNumbers {
   }
 }
 
-impl Iterator for PostfixedLuckyNumbers {
+impl Iterator for PostfixedLuckyNumbersIterator {
   type Item = u32;
 
   fn next(&mut self) -> Option<Self::Item> {
@@ -42,12 +42,12 @@ impl Iterator for PostfixedLuckyNumbers {
 
 #[cfg(test)]
 mod test {
-  use super::PostfixedLuckyNumbers;
+  use super::PostfixedLuckyNumbersIterator;
 
   #[test]
   fn single_digit_sequence() {
     // Arrange
-    let lucky_numbers = PostfixedLuckyNumbers::new(3);
+    let lucky_numbers = PostfixedLuckyNumbersIterator::new(3);
 
     // Act
     let result: Vec<u32> = lucky_numbers.take(20).collect();
@@ -62,7 +62,7 @@ mod test {
   #[test]
   fn double_digit_sequence() {
     // Arrange
-    let lucky_numbers = PostfixedLuckyNumbers::new(14);
+    let lucky_numbers = PostfixedLuckyNumbersIterator::new(14);
 
     // Act
     let result: Vec<u32> = lucky_numbers.take(20).collect();
@@ -80,7 +80,7 @@ mod test {
   #[test]
   fn triple_digit_sequence() {
     // Arrange
-    let lucky_numbers = PostfixedLuckyNumbers::new(987);
+    let lucky_numbers = PostfixedLuckyNumbersIterator::new(987);
 
     // Act
     let result: Vec<u32> = lucky_numbers.take(20).collect();

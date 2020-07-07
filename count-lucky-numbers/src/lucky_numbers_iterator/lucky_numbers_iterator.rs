@@ -1,12 +1,12 @@
-use super::postfixed_lucky_numbers::PostfixedLuckyNumbers;
-use super::prefixed_lucky_numbers::PrefixedLuckyNumbers;
+use super::postfixed_lucky_numbers_iterator::PostfixedLuckyNumbersIterator;
+use super::prefixed_lucky_numbers_iterator::PrefixedLuckyNumbersIterator;
 
 /// Iterates over all numbers that contain a lucky sequence at least once.
 /// For example, if the sequence is 123, it iterate over 123, 1123, 1230, ...
 pub struct LuckyNumbersIterator {
   sequence: u32,
-  postfixed_lucky_numbers: PostfixedLuckyNumbers,
-  prefixed_lucky_numbers: PrefixedLuckyNumbers,
+  postfixed_lucky_numbers: PostfixedLuckyNumbersIterator,
+  prefixed_lucky_numbers: PrefixedLuckyNumbersIterator,
   next_postfixed_value: u32,
   next_prefixed_value: u32,
   first_value: bool,
@@ -14,8 +14,8 @@ pub struct LuckyNumbersIterator {
 
 impl LuckyNumbersIterator {
   pub fn new(sequence: u32) -> Self {
-    let mut postfixed_lucky_numbers = PostfixedLuckyNumbers::new(sequence);
-    let mut prefixed_lucky_numbers = PrefixedLuckyNumbers::new(sequence);
+    let mut postfixed_lucky_numbers = PostfixedLuckyNumbersIterator::new(sequence);
+    let mut prefixed_lucky_numbers = PrefixedLuckyNumbersIterator::new(sequence);
     let next_postfixed_value = postfixed_lucky_numbers
       .next()
       .expect("There should be at least one value in the lucky number sequence");
