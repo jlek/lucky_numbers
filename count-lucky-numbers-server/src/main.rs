@@ -35,7 +35,10 @@ async fn main() {
 /// ```
 #[derive(Deserialize)]
 struct CountLuckyNumbersRequest {
+    /// The first number in the range of numbers to consider
     start: u32,
+    /// The last number in the range of numbers to consider
     end: u32,
+    /// The total number of occurrences of this sequence in the range will be counted
     sequence: u32,
 }
