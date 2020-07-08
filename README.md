@@ -10,6 +10,7 @@ This program can count the number of occurences of a given lucky number in a giv
     - [Run development build](#run-development-build)
     - [Run release build](#run-release-build)
     - [Sample request](#sample-request)
+    - [Generate Documentation](#generate-documentation)
   - [Project setup](#project-setup)
     - [Workspace](#workspace)
     - [Tests](#tests)
@@ -48,6 +49,12 @@ cargo run --release
 
 ```shell
 curl "localhost:3030/lucky_numbers?start=1&end=1000&sequence=123"
+```
+
+### Generate Documentation
+
+```shell
+cargo doc --workspace --open --no-deps
 ```
 
 ## Project setup
