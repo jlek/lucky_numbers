@@ -18,7 +18,7 @@ use super::number_of_matches::number_of_matches;
 /// ```
 #[allow(clippy::needless_pass_by_value)] // Accept the request by value: the request is consumed to produce the response
 #[must_use]
-pub fn count_lucky_numbers(start: u32, end: u32, sequence: u32) -> usize {
+pub fn count_lucky_numbers(start: u32, end: u32, sequence: u32) -> u32 {
   let sequence_string = sequence.to_string();
   let sequence_bytes = sequence_string.as_bytes();
 

@@ -1,6 +1,6 @@
 /// Helper function to find the number of occurences of a string in a substring.
 /// Can be used instead of just doing `some_string.matches(sub_string).count()` - this should be slightly more performant.
-pub fn number_of_matches(number: &[u8], sequence: &[u8]) -> usize {
+pub fn number_of_matches(number: &[u8], sequence: &[u8]) -> u32 {
   // If the sequence does not "fit" in the number, there can be no matches
   if sequence.len() > number.len() {
     return 0;
