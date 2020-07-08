@@ -5,10 +5,10 @@ authors = ["John <jlek@findmypast.com>"]
 edition = "2018"
 
 [dependencies]
+actix-rt = "1.0"
+actix-web = "2.0"
 count-lucky-numbers = { path = "../count-lucky-numbers"}
-tokio = { version = "0.2", features = ["macros"] }
 serde = { version = "1.0", features = ["derive"] }
-warp = "0.2"
 
 [dev-dependencies.cargo-husky]
 version = "1"

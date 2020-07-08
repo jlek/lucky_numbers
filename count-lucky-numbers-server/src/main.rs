@@ -2,22 +2,21 @@
 
 //! This binary crate starts a web server with an endpoint that wraps the `count_lucky_numbers` function.
 
+use actix_web::{web, App, HttpServer};
 use count_lucky_numbers::count_lucky_numbers;
 use serde::Deserialize;
-use warp::Filter;
 
 /// The entry point of the application. Starts a web server with an endpoint that wraps the `count_lucky_numbers` function.
-#[tokio::main]
-async fn main() {
-    let lucky_numbers_route = warp::path("lucky_numbers")
-        .and(warp::query::<CountLuckyNumbersRequest>())
-        .map(|request: CountLuckyNumbersRequest| {
-            count_lucky_numbers(request.start, request.end, request.sequence).to_string()
-        });
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| App::new().route("/lucky_numbers", web::get().to(lucky_numbers)))
+        .bind("127.0.0.1:8088")?
+        .run()
+        .await
+}
 
-    warp::serve(lucky_numbers_route)
-        .run(([127, 0, 0, 1], 3030))
-        .await;
+async fn lucky_numbers(request: web::Query<CountLuckyNumbersRequest>) -> String {
+    count_lucky_numbers(request.start, request.end, request.sequence).to_string()
 }
 
 /// Represents the query parameters required for a `lucky_numbers` request. This will get deserialised automaticaly by Warp/Serde.

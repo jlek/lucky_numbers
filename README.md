@@ -48,7 +48,7 @@ cargo run --release
 ### Sample request
 
 ```shell
-curl "localhost:3030/lucky_numbers?start=1&end=1000&sequence=123"
+curl "localhost:8088/lucky_numbers?start=1&end=1000&sequence=123"
 ```
 
 ### Generate Documentation
